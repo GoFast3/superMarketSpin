@@ -10,8 +10,9 @@ public class AutoMove : MonoBehaviour
     public CharacterController controller;
     [Header("Movement Settings")]
     public float forwardSpeed = 5f;
-    public float jumpHeight = 2f;
     public float laneDistance = 2f;
+    public float jumpForce = 4f;    
+    public float gravity = -20f;    
     [Header("Lane Settings")]
     [SerializeField] private int currentLane = 0;
     [SerializeField] private float[] lanePositions = new float[] { 0f, 2f, 4f };
@@ -19,33 +20,57 @@ public class AutoMove : MonoBehaviour
     private bool isGrounded;
     private bool isJumping = false;
     private float targetX = 0f;
+
+    public float minSpawnDistance ;
+    
+
+    public void Start()
+    {
+        forwardSpeed = PlayerPrefs.GetFloat("forwardSpeed");
+        bool hasObstacles = PlayerPrefs.GetInt("hasObstacles", 1) == 1;
+       
+
+    }
+    
+
     void Update()
     {
-        // Ground check
-        isGrounded = controller.isGrounded;
-        if (isGrounded && !isJumping)
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1.1f) && velocity.y <= 0;
+
+        if (isGrounded)
         {
-            velocity.y = -0.9f;
+            if (!isJumping)
+            {
+                velocity.y = -0.9f; 
+            }
+
+            transform.position = new Vector3(transform.position.x, hit.point.y, transform.position.z);
         }
+        else
+        {
+            velocity.y += gravity * Time.deltaTime;
+        }
+
         Vector3 move = Vector3.forward * forwardSpeed;
-        // Handle lane switching
+
         HandleLaneSwitching();
-        // Calculate lane movement
         float xPos = transform.position.x;
-        float moveX = (targetX - xPos);
-        if (Mathf.Abs(moveX) > Mathf.Abs(targetX - xPos))
-        {
-            moveX = targetX - xPos;
-        }
+        float moveX = targetX - xPos;
         move.x = moveX;
-        // Handle jumping
+
+        move.y = velocity.y * Time.deltaTime;
+
         HandleJumping();
-        // Move character
         controller.Move(move);
+
         transform.forward = Vector3.forward;
-        // Check if jump animation is complete
+
+      
         CheckJumpAnimationEnd();
     }
+
+
+
     /// <summary>
     /// Handles lane switching input
     /// </summary>
@@ -69,11 +94,16 @@ public class AutoMove : MonoBehaviour
     /// </summary>
     private void HandleJumping()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
+
+       
+        if (Input.GetKeyDown(KeyCode.UpArrow) )
         {
+            
             Debug.Log("Jumping");
             isJumping = true;
-            animator.CrossFadeInFixedTime("Jump", 0.1f);
+            velocity.y = Mathf.Sqrt(jumpForce * -1f * gravity);
+            //animator.CrossFadeInFixedTime("Jump", 0.1f);
+            animator.Play("Jump");
         }
     }
     /// <summary>

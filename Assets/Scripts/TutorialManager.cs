@@ -1,101 +1,120 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-/// <summary>
-/// Manages tutorial messages and timing for game introduction
-/// </summary>
+
 public class TutorialManager : MonoBehaviour
 {
     [Header("UI Elements")]
     [SerializeField] private GameObject tutorialPanel;
     [SerializeField] private Text tutorialText;
-
-    [Header("Tutorial Settings")]
-    [SerializeField] private float tutorialDuration = 30f;
-    [SerializeField] private float messageInterval = 6f;
-    [SerializeField]
-    private string[] tutorialMessages = new string[]
-    {
-       "Welcome to the supermarket sprint!",
-       "Use the up arrow ↑ to jump",
-       "Use the arrows ← → to switch between lanes",
-       "To collect products, move to the product lane and press space",
-       "Watch out for obstacles!",
-       "Good luck!"
-    };
+    [SerializeField] private Button skipButton;
 
     public static bool IsTutorialActive { get; private set; } = true;
-    private float startTime;
-    private bool hasStarted;
+    private int currentStep = 0;
+    private TutorialStep[] tutorialSteps;
+
+    void Awake()
+    {
+        // בדיקות אתחול
+        if (tutorialPanel == null) Debug.LogError("Tutorial Panel is not assigned!");
+        if (tutorialText == null) Debug.LogError("Tutorial Text is not assigned!");
+        if (skipButton == null) Debug.LogError("Skip Button is not assigned!");
+    }
 
     void Start()
     {
-        InitializeTutorial();
-    }
-
-    void Update()
-    {
-        if (!hasStarted) return;
-        HandleTutorialProgress();
-    }
-
-    private void OnEnable()
-    {
-        ResetTutorial();
-    }
-
-    /// <summary>
-    /// Initializes tutorial components and first message
-    /// </summary>
-    private void InitializeTutorial()
-    {
-        ResetTutorial();
-        if (tutorialText != null)
+        if (PlayerPrefs.GetInt("ShowTutorial") == 0)
         {
-            tutorialText.text = tutorialMessages[0];
-            Debug.Log($"Tutorial started: {tutorialMessages[0]}");
+            EndTutorial();
+            return;
+        }
+        Debug.Log("TutorialManager Starting...");
+
+        InitializeTutorialSteps();
+
+        if (skipButton != null)
+        {
+            Debug.Log("Setting up skip button...");
+            skipButton.onClick.RemoveAllListeners();
+            skipButton.onClick.AddListener(OnSkipButtonClick);
+            Debug.Log("Skip button listener added");
         }
         else
         {
-            Debug.LogError("Tutorial Text component is missing!");
+            Debug.LogError("Skip button is null!");
+            return;
         }
+
+        ShowCurrentStep();
+        Debug.Log("TutorialManager Started Successfully");
     }
 
-    /// <summary>
-    /// Handles tutorial message progression and completion
-    /// </summary>
-    private void HandleTutorialProgress()
+   
+    public void OnSkipButtonClick()
     {
-        float elapsedTime = Time.time - startTime;
-        int messageIndex = (int)(elapsedTime / messageInterval);
+        Debug.Log("Skip button clicked!");
+        SkipStep();
+    }
 
-        if (messageIndex < tutorialMessages.Length)
+    private void InitializeTutorialSteps()
+    {
+        tutorialSteps = new TutorialStep[]
         {
-            tutorialText.text = tutorialMessages[messageIndex];
-        }
+            new TutorialStep { message = "Movement Controls:\n← LEFT ARROW to move left\n→ RIGHT ARROW to move right\n↑ UP ARROW to jump\n\nPress 'Skip' to continue" },
+            new TutorialStep { message = "Your Goal:\nCollect as many products as possible\nin the shortest time\n\nPress 'Skip' to continue" },
+            new TutorialStep { message = "How to Collect Products:\n1. Move to the product's lane\n2. Press SPACEBAR to collect\n\nTip: You can collect from a distance!\n\nPress 'Skip' to continue" },
+            new TutorialStep { message = "Ready to Play!\n\nUse arrows to move and jump\nPress SPACEBAR to collect\n\nPress 'Skip' to start" }
+        };
+        Debug.Log($"Tutorial steps initialized: {tutorialSteps.Length} steps");
+    }
 
-        if (elapsedTime >= tutorialDuration)
+    private void ShowCurrentStep()
+    {
+        if (currentStep >= tutorialSteps.Length)
         {
+            Debug.Log("Reached end of tutorial steps");
             EndTutorial();
+            return;
+        }
+
+        if (tutorialPanel != null && tutorialText != null)
+        {
+            tutorialPanel.SetActive(true);
+            tutorialText.text = tutorialSteps[currentStep].message;
+            Debug.Log($"Showing step {currentStep}: {tutorialSteps[currentStep].message}");
+        }
+        else
+        {
+            Debug.LogError("Tutorial panel or text is missing!");
         }
     }
 
-    /// <summary>
-    /// Resets tutorial timer and state
-    /// </summary>
-    private void ResetTutorial()
+    public void SkipStep()
     {
-        startTime = Time.time;
-        hasStarted = true;
+        Debug.Log($"Skipping from step {currentStep} to {currentStep + 1}");
+        currentStep++;
+        ShowCurrentStep();
     }
 
-    /// <summary>
-    /// Ends tutorial and cleans up UI
-    /// </summary>
     private void EndTutorial()
     {
         IsTutorialActive = false;
-        tutorialText.text = "";
-        tutorialPanel.SetActive(false);
-        enabled = false;
+        if (tutorialPanel != null)
+        {
+            tutorialPanel.SetActive(false);
+        }
+        if (tutorialText != null)
+        {
+            tutorialText.text = "";
+        }
+        if (skipButton != null)
+        {
+            skipButton.gameObject.SetActive(false);
+        }
+        Debug.Log("Tutorial ended");
+    }
+
+    private class TutorialStep
+    {
+        public string message;
     }
 }
