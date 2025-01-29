@@ -13,6 +13,7 @@ namespace SubwaySurfer
         [SerializeField] private Transform player;
         [SerializeField] private Text scoreText;
 
+
         [Header("Spawn Settings")]
         [Tooltip("Y position where products will spawn")]
         [SerializeField] private float spawnYPosition = -0.3f;
@@ -100,22 +101,30 @@ namespace SubwaySurfer
 
         private void SpawnRandomProduct()
         {
-            // Select random lane
-            int randomLaneIndex = Random.Range(0, lanePositions.Length);
-
-            // Select random product prefab
+            bool validPositionFound = false;
+            Vector3 spawnPosition = Vector3.zero;
             int randomProductIndex = Random.Range(0, productPrefabs.Length);
 
-            // Calculate spawn position
-            float spawnZ = player.position.z + Random.Range(minSpawnDistance, maxSpawnDistance);
-            Vector3 spawnPosition = new Vector3(lanePositions[randomLaneIndex], spawnYPosition, spawnZ);
+  
+                // בחירת מסלול רנדומלי
+                int randomLaneIndex = Random.Range(0, lanePositions.Length);
+                float spawnZ = player.position.z + Random.Range(minSpawnDistance, maxSpawnDistance);
+                spawnPosition = new Vector3(lanePositions[randomLaneIndex], spawnYPosition, spawnZ);
 
-            // Instantiate selected product
-            currentProduct = Instantiate(productPrefabs[randomProductIndex], spawnPosition, Quaternion.identity);
-            productSpawnTime = Time.time;
 
-            Debug.Log($"New product spawned: {productPrefabs[randomProductIndex].name} at position: {spawnPosition}");
-        }
+                RaycastHit hit;
+            while (Physics.Raycast(spawnPosition, Vector3.back, out hit, 12f) && hit.collider.CompareTag("obstacle"))
+               {
+                    spawnZ += 12f;
+                    spawnPosition.z = spawnZ;
+
+                }
+                
+                    currentProduct = Instantiate(productPrefabs[randomProductIndex], spawnPosition, Quaternion.identity);
+                productSpawnTime = Time.time;
+
+            }
+        
 
         private void CollectProduct()
         {

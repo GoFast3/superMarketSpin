@@ -7,15 +7,13 @@ using UnityEngine;
 /// </summary>
 public class ObstacleManager : MonoBehaviour
 {
+    private float lastSpawnDistance;
+    private float spawnDistanceThreshold = 30f;
+    private float spawnDistanceReductionRate = 0.1f; 
+
     [Header("Obstacle Settings")]
     [Tooltip("Obstacle prefab to spawn")]
     [SerializeField] private GameObject obstaclePrefab;
-    [Tooltip("Minimum spawn distance from player")]
-    [SerializeField] private float minSpawnDistance = 10f;
-    [Tooltip("Maximum spawn distance from player")]
-    [SerializeField] private float maxSpawnDistance = 80f;
-    [Tooltip("Time between obstacle spawns")]
-    [SerializeField] private float spawnInterval = 5f;
     [Tooltip("Height position of obstacles")]
     [SerializeField] private float obstacleHeight = -0.5f;
 
@@ -26,25 +24,26 @@ public class ObstacleManager : MonoBehaviour
     [SerializeField] private float laneDistance = 2f;
     [SerializeField] private Transform playerTransform;
 
-    private float lastSpawnTime;
     private TutorialManager tutorialManager;
 
     private void Awake()
     {
         Debug.Log("ObstacleManager: Awake called");
-        // Find the TutorialManager in the scene
         tutorialManager = FindObjectOfType<TutorialManager>();
     }
 
     private void Start()
     {
+        if (TutorialManager.IsTutorialActive)
+        {
+            return;
+        }
         if (PlayerPrefs.GetInt("hasObstacles", 1) == 0)
         {
             enabled = false;
         }
         Debug.Log("ObstacleManager: Start called");
 
-        // If playerTransform isn't set in inspector, find it by tag
         if (playerTransform == null)
         {
             Debug.Log("ObstacleManager: Looking for player by tag");
@@ -64,33 +63,32 @@ public class ObstacleManager : MonoBehaviour
             Debug.LogError("ObstacleManager: Obstacle prefab is not assigned!");
         }
 
-        minSpawnDistance = PlayerPrefs.GetFloat("minSpawnDistance");
-        Debug.Log($"ObstacleManager: Starting game with min distance: {minSpawnDistance}");
-        lastSpawnTime = Time.time;
+        lastSpawnDistance = playerTransform.position.z;
+        SpawnObstacle();  // spawn the first obstacle at the beginning
     }
 
     private void Update()
     {
-        // Check if tutorial is active
-        if (TutorialManager.IsTutorialActive)
-        {
-            return; // Don't spawn obstacles during tutorial
-        }
+        
 
-        float timeSinceLastSpawn = Time.time - lastSpawnTime;
-        if (timeSinceLastSpawn > spawnInterval)
+        // check if the player has moved enough distance to spawn a new obstacle
+        float playerDistanceTravelled = playerTransform.position.z;
+
+        if (playerDistanceTravelled - lastSpawnDistance >= spawnDistanceThreshold)
         {
-            lastSpawnTime = Time.time;
-            SpawnObstacle();
+            lastSpawnDistance = playerDistanceTravelled;  // Update the last spawn distance
+            SpawnObstacle();  // Create a new obstacle
+
+            // Reduce the spawn distance threshold for the next obstacle
+            spawnDistanceThreshold = Mathf.Max(1f, spawnDistanceThreshold - spawnDistanceReductionRate);
         }
     }
 
     /// <summary>
-    /// Spawns an obstacle at random lane with calculated distance
+    /// Spawns an obstacle at a random lane with calculated distance
     /// </summary>
     private void SpawnObstacle()
     {
-        // Check if required components are available
         if (playerTransform == null)
         {
             Debug.LogError("ObstacleManager: playerTransform is null!");
@@ -104,16 +102,22 @@ public class ObstacleManager : MonoBehaviour
         }
 
         // Calculate spawn position
-        float spawnDistance = Random.Range(minSpawnDistance, maxSpawnDistance);
-        int randomLane = Random.Range(1, laneCount);
-        Vector3 spawnPosition = playerTransform.position +
-                              playerTransform.forward * spawnDistance;
-
-        // Set height and lane position
+        float spawnDistance = Random.Range(30f, 60f);
+        int randomLane = Random.Range(0, laneCount);
+        Debug.Log("randomLand " + randomLane);
+        Vector3 spawnPosition = playerTransform.position + playerTransform.forward * spawnDistance;
         spawnPosition.y = obstacleHeight;
-        spawnPosition.x = (randomLane - 1) * laneDistance;
+        spawnPosition.x = randomLane * laneDistance;
+        Debug.Log("spawnPosition.x " + spawnPosition.x);
 
-        GameObject newObstacle = Instantiate(obstaclePrefab, spawnPosition, Quaternion.identity);
-        Debug.Log($"ObstacleManager: Obstacle spawned: {newObstacle != null}");
+        RaycastHit hit;
+        if (!Physics.Raycast(spawnPosition, Vector3.forward, out hit, 12f) || !hit.collider.CompareTag("product"))
+        {
+            GameObject newObstacle = Instantiate(obstaclePrefab, spawnPosition, Quaternion.identity);
+            Debug.Log($"ObstacleManager: Obstacle spawned at distance {spawnDistance} and lane {randomLane}");
+
+        }
+
     }
 }
+

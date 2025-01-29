@@ -19,9 +19,9 @@ public class MenuManager : MonoBehaviour
     public Button startButton;
 
     [Header("Speed Settings")]
-    [SerializeField] float EasySpeed = 1f;
-    [SerializeField] float MediumSpeed = 2f;
-    [SerializeField] float HardSpeed = 3f;
+    [SerializeField] float EasySpeed ;
+    [SerializeField] float MediumSpeed ;
+    [SerializeField] float HardSpeed ;
 
     private GameObject player;
 

@@ -14,7 +14,7 @@ public class PlayerStats : MonoBehaviour
     {
         
         SpeedLevel = PlayerPrefs.GetFloat("forwardSpeed", 1);
-        obstacleLevel = PlayerPrefs.GetFloat("minSpawnDistance", 1);
+        obstacleLevel = PlayerPrefs.GetFloat("hasObstacles", 1);
     }
 
     public void AddResponseTime(float time)
@@ -24,13 +24,11 @@ public class PlayerStats : MonoBehaviour
         AverageResponseTime = totalResponseTime / responseCount;
     }
 
-    // קוראים לפונקציה הזו בכל פעם שהשחקן מפספס מוצר
     public void AddMissedProduct()
     {
         missProduct++;
     }
 
-    // פונקציות לקבלת הנתונים
     public float GetAverageResponseTime()
     {
         return AverageResponseTime;

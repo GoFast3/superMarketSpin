@@ -6,35 +6,15 @@ using System.Collections;
 /// </summary>
 public class CameraController : MonoBehaviour
 {
-    [Header("Camera Settings")]
-    [Tooltip("Target to follow (usually the player)")]
     [SerializeField] Transform target;
-
-    [Tooltip("Offset from target position")]
     [SerializeField] Vector3 offset;
-
-    [Tooltip("Camera follow speed")]
     [SerializeField] private float speedFollow = 5f;
-
-    private float y;
+    [SerializeField] private float fixedHeight ; // גובה קבוע למצלמה
 
     private void LateUpdate()
     {
         Vector3 followPos = target.position + offset;
-
-        // Check ground position
-        RaycastHit hit;
-        if (Physics.Raycast(target.position, Vector3.down, out hit, 2.5f))
-        {
-            y = Mathf.Lerp(y, hit.point.y, Time.deltaTime * speedFollow);
-        }
-        else
-        {
-            y = Mathf.Lerp(y, target.position.y, Time.deltaTime * speedFollow);
-        }
-
-        // Update camera position
-        followPos.y = y + offset.y;
+        followPos.y = fixedHeight + offset.y;
         transform.position = followPos;
     }
 }

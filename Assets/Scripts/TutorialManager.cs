@@ -14,7 +14,7 @@ public class TutorialManager : MonoBehaviour
 
     void Awake()
     {
-        // בדיקות אתחול
+       
         if (tutorialPanel == null) Debug.LogError("Tutorial Panel is not assigned!");
         if (tutorialText == null) Debug.LogError("Tutorial Text is not assigned!");
         if (skipButton == null) Debug.LogError("Skip Button is not assigned!");
@@ -28,7 +28,7 @@ public class TutorialManager : MonoBehaviour
             return;
         }
         Debug.Log("TutorialManager Starting...");
-
+        
         InitializeTutorialSteps();
 
         if (skipButton != null)

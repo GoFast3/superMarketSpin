@@ -17,7 +17,7 @@ public class ResultsDisplay : MonoBehaviour
         {
             0.2f => "Easy",
             0.3f => "Medium",
-            0.6f => "Hard",
+            0.4f => "Hard",
             _ => "Unknown"
         };
     }
@@ -53,10 +53,7 @@ public class ResultsDisplay : MonoBehaviour
 
         foreach (var result in results)
         {
-            Debug.Log($"Creating row for result date: {result.date}");
-            Debug.Log($"Creating row for result miss pro: {result.missProduct}");
-            Debug.Log($"Creating row for resultobstacleLevel: {GetObstacleText(result.obstacleLevel)}");
-            Debug.Log($"Creating row for resultspSpeedLevel: {GetDifficultyText(result.spSpeedLevel)}");
+        
 
             GameObject rowObj = Instantiate(rowPrefab, contentParent);
             Text[] texts = rowObj.GetComponentsInChildren<Text>();

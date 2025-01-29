@@ -668,8 +668,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 741961807}
-  offset: {x: 0, y: 3.14, z: -1.5}
+  offset: {x: 0, y: -0.7, z: -2}
   speedFollow: 5
+  fixedHeight: 3.14
 --- !u!1 &1004365300
 GameObject:
   m_ObjectHideFlags: 0
@@ -1097,9 +1098,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstaclePrefab: {fileID: 5243540695542748484, guid: cf11591b126f82a44915f299bca50dbc, type: 3}
-  minSpawnDistance: 10
-  maxSpawnDistance: 80
-  spawnInterval: 5
   obstacleHeight: -0.5
   laneCount: 3
   laneDistance: 2
@@ -1341,7 +1339,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3520665378152893220, guid: 30eda7e6142a3c64282a24f2e676acc6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3520665378152893220, guid: 30eda7e6142a3c64282a24f2e676acc6, type: 3}
       propertyPath: m_LocalPosition.y
