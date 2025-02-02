@@ -2,13 +2,19 @@
 
 A Unity-based rehabilitation game designed to help adults improve their reaction time through an engaging supermarket shopping experience. Developed in collaboration with the Occupational Therapy Department.
 
-## Project Supervision
-Under the guidance of:
-- Professor David Erel Segal Halevi
-- Teaching Assistant Mr. Viktor Kushnirov
+Play the Game
+🎮 Play on https://talya-amd-roei.itch.io/superplay
+Project Supervision
+Computer Science Department
 
-## Overview
+Professor David Erel Segal Halevi
+Teaching Assistant Mr. Viktor Kushnirov
 
+Occupational Therapy Department
+
+Professor 
+
+Overview
 This therapeutic gaming solution is specifically designed for adults, focusing on improving reaction time and cognitive function. Players navigate through a realistic supermarket environment, collecting products while the game measures and tracks their response times.
 
 ## Game Features
