@@ -69,6 +69,11 @@ The game tracks:
 - **Talya Perets**
 - **Roei Biton**
 
+  #### **Occupational Therapy Team**
+  -Yfat Ben Refeak
+  -Yael Sarusi
+  -Shiraz unter
+  
 ## **Technical Requirements**
 - Unity Engine
 - C# Development Environment
