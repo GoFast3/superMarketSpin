@@ -38,10 +38,13 @@ public class ObstacleManager : MonoBehaviour
         {
             return;
         }
-        if (PlayerPrefs.GetInt("hasObstacles", 1) == 0)
+        int gameMode = PlayerPrefs.GetInt("GameMode", 1);
+        if (gameMode == 0|| gameMode==1)
         {
             enabled = false;
+            return;
         }
+
         Debug.Log("ObstacleManager: Start called");
 
         if (playerTransform == null)
@@ -64,7 +67,7 @@ public class ObstacleManager : MonoBehaviour
         }
 
         lastSpawnDistance = playerTransform.position.z;
-        SpawnObstacle();  // spawn the first obstacle at the beginning
+        SpawnObstacle();  
     }
 
     private void Update()
@@ -82,6 +85,7 @@ public class ObstacleManager : MonoBehaviour
             // Reduce the spawn distance threshold for the next obstacle
             spawnDistanceThreshold = Mathf.Max(1f, spawnDistanceThreshold - spawnDistanceReductionRate);
         }
+
     }
 
     /// <summary>

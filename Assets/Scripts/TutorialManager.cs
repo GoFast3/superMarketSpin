@@ -22,6 +22,7 @@ public class TutorialManager : MonoBehaviour
 
     void Start()
     {
+
         if (PlayerPrefs.GetInt("ShowTutorial") == 0)
         {
             EndTutorial();
@@ -35,7 +36,7 @@ public class TutorialManager : MonoBehaviour
         {
             Debug.Log("Setting up skip button...");
             skipButton.onClick.RemoveAllListeners();
-            skipButton.onClick.AddListener(OnSkipButtonClick);
+           
             Debug.Log("Skip button listener added");
         }
         else
@@ -49,11 +50,7 @@ public class TutorialManager : MonoBehaviour
     }
 
    
-    public void OnSkipButtonClick()
-    {
-        Debug.Log("Skip button clicked!");
-        SkipStep();
-    }
+    
 
     private void InitializeTutorialSteps()
     {

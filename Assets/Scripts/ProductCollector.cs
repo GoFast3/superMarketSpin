@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace SubwaySurfer
@@ -40,6 +41,7 @@ namespace SubwaySurfer
         private float gameStartTime;
         private List<float> reactionTimes = new List<float>();
         private PlayerStats playerStats;
+        private AudioManager audioManager;
 
         void Start()
         {
@@ -49,6 +51,13 @@ namespace SubwaySurfer
                 Debug.LogError("No product prefabs assigned to spawner!");
                 return;
             }
+            // Get reference to AudioManager
+            audioManager = FindFirstObjectByType<AudioManager>();
+            if (audioManager == null)
+            {
+                Debug.LogWarning("AudioManager not found in scene!");
+            }
+
 
             InitializeGame();
         }
@@ -57,18 +66,40 @@ namespace SubwaySurfer
         {
             UpdateScoreUI();
 
-            // Find and validate PlayerStats
+
             playerStats = Object.FindFirstObjectByType<PlayerStats>();
+            gameProgress = Object.FindFirstObjectByType<GameProgress>();
+
+            // Find and validate PlayerStats
+            //  playerStats = Object.FindFirstObjectByType<PlayerStats>();
             if (playerStats == null)
             {
                 Debug.LogError("PlayerStats not found in scene!");
             }
 
             // Find and validate GameProgress
-            gameProgress = Object.FindFirstObjectByType<GameProgress>();
+            //  gameProgress = Object.FindFirstObjectByType<GameProgress>();
             if (gameProgress == null)
             {
                 Debug.LogError("GameProgress not found in scene!");
+            }
+            int gameMode = PlayerPrefs.GetInt("GameMode", 1);
+            if (gameMode == 0)
+            {
+                lanePositions = new float[] { 0f, 2f };
+
+
+
+            }
+            else if (gameMode == 1)
+            {
+                lanePositions = new float[] { 0f, 2f, 4f };
+
+
+            }
+            else
+            {
+                lanePositions = new float[] { 0f, 2f, 4f };
             }
 
             gameStartTime = Time.time;
@@ -90,13 +121,29 @@ namespace SubwaySurfer
                 SpawnRandomProduct();
             }
 
-            // Check for product collection
-            if (currentProduct != null && IsPlayerOnProductLane() && Input.GetKeyDown(KeyCode.Space))
+            // Check for product collection with sound
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                CollectProduct();
+                if (currentProduct != null && IsPlayerOnProductLane())
+                {
+                    CollectProduct();
+                    if (audioManager != null)
+                    {
+                        audioManager.PlayCorrectCollect();
+                    }
+                }
+                else
+                {
+                    // Wrong collection attempt
+                    if (audioManager != null)
+                    {
+                        audioManager.PlayWrongCollect();
+                    }
+                }
             }
 
             CheckGameEndConditions();
+
         }
 
         private void SpawnRandomProduct()
@@ -105,26 +152,26 @@ namespace SubwaySurfer
             Vector3 spawnPosition = Vector3.zero;
             int randomProductIndex = Random.Range(0, productPrefabs.Length);
 
-  
-                // בחירת מסלול רנדומלי
-                int randomLaneIndex = Random.Range(0, lanePositions.Length);
-                float spawnZ = player.position.z + Random.Range(minSpawnDistance, maxSpawnDistance);
-                spawnPosition = new Vector3(lanePositions[randomLaneIndex], spawnYPosition, spawnZ);
+
+            // בחירת מסלול רנדומלי
+            int randomLaneIndex = Random.Range(0, lanePositions.Length);
+            float spawnZ = player.position.z + Random.Range(minSpawnDistance, maxSpawnDistance);
+            spawnPosition = new Vector3(lanePositions[randomLaneIndex], spawnYPosition, spawnZ);
 
 
-                RaycastHit hit;
+            RaycastHit hit;
             while (Physics.Raycast(spawnPosition, Vector3.back, out hit, 12f) && hit.collider.CompareTag("obstacle"))
-               {
-                    spawnZ += 12f;
-                    spawnPosition.z = spawnZ;
-
-                }
-                
-                    currentProduct = Instantiate(productPrefabs[randomProductIndex], spawnPosition, Quaternion.identity);
-                productSpawnTime = Time.time;
+            {
+                spawnZ += 12f;
+                spawnPosition.z = spawnZ;
 
             }
-        
+
+            currentProduct = Instantiate(productPrefabs[randomProductIndex], spawnPosition, Quaternion.identity);
+            productSpawnTime = Time.time;
+
+        }
+
 
         private void CollectProduct()
         {
@@ -196,5 +243,13 @@ namespace SubwaySurfer
 
             UnityEngine.SceneManagement.SceneManager.LoadScene("ResultsScene");
         }
+        public void ExitToMenu()
+        {
+
+            PlayerPrefs.SetInt("ShowTutorial", 0);
+
+            SceneManager.LoadScene("MenuScene"); // Loads the main menu scene
+        }
     }
+
 }

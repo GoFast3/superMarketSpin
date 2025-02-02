@@ -13,22 +13,65 @@ public class AutoMove : MonoBehaviour
     public float laneDistance = 2f;
     public float jumpForce = 4f;    
     public float gravity = -20f;    
+   
     [Header("Lane Settings")]
-    [SerializeField] private int currentLane = 0;
+
     [SerializeField] private float[] lanePositions = new float[] { 0f, 2f, 4f };
     private Vector3 velocity;
     private bool isGrounded;
     private bool isJumping = false;
     private float targetX = 0f;
+    private int LandCunt;
 
     public float minSpawnDistance ;
-    
+    private int gameMode;
+    private int currentLane;
+    bool hasObstacles ;
+
+
+
 
     public void Start()
     {
+
+        transform.position = new Vector3(2f, transform.position.y, transform.position.z);
+
         forwardSpeed = PlayerPrefs.GetFloat("forwardSpeed");
-        bool hasObstacles = PlayerPrefs.GetInt("hasObstacles", 1) == 1;
-       
+        gameMode = PlayerPrefs.GetInt("GameMode", 1); 
+        
+
+        if (gameMode == 0)
+        {
+            lanePositions = new float[] { 0f, 2f };
+            hasObstacles = false;
+            LandCunt = 2;
+            currentLane = 0;
+
+
+        }
+        else if (gameMode == 1)
+        {
+            lanePositions = new float[] { 0f, 2f, 4f };
+            hasObstacles = false;
+            LandCunt = 3;
+            currentLane=1;
+
+        }
+        else
+        {
+            lanePositions = new float[] { 0f, 2f, 4f };
+            hasObstacles = true;
+            LandCunt = 3;
+            currentLane = 1;
+
+        }
+
+        Debug.Log("gamemode " + gameMode);
+
+        targetX = lanePositions[currentLane];
+        transform.position = new Vector3(targetX, transform.position.y, transform.position.z);
+
+        Debug.Log("gamemode " + gameMode);
 
     }
     
@@ -84,7 +127,7 @@ public class AutoMove : MonoBehaviour
             currentLane--;
             targetX = lanePositions[currentLane];
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow) && currentLane < 2)
+        else if (Input.GetKeyDown(KeyCode.RightArrow) && currentLane < (LandCunt-1))
         {
             Debug.Log($"Moving right - Lane: {currentLane}");
             currentLane++;
