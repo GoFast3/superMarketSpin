@@ -12,7 +12,7 @@ A Unity-based rehabilitation game designed to help adults improve their reaction
 - **Teaching Assistant** Mr. Viktor Kushnirov
 
 ### **Occupational Therapy Department**
-- [OT Professor's Name]
+-
 
 ## **Overview**
 
