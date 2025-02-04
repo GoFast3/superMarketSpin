@@ -34,16 +34,17 @@ public class ObstacleManager : MonoBehaviour
 
     private void Start()
     {
-        if (TutorialManager.IsTutorialActive)
-        {
-            return;
-        }
         int gameMode = PlayerPrefs.GetInt("GameMode", 1);
-        if (gameMode == 0|| gameMode==1)
+        if (gameMode == 0 || gameMode == 1)
         {
             enabled = false;
             return;
         }
+        if (TutorialManager.IsTutorialActive)
+        {
+            return;
+        }
+       
 
         Debug.Log("ObstacleManager: Start called");
 

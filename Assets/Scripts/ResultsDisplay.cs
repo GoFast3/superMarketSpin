@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine.SceneManagement;
 
 public class ResultsDisplay : MonoBehaviour
@@ -7,29 +8,28 @@ public class ResultsDisplay : MonoBehaviour
     [SerializeField] private Transform contentParent;
     [SerializeField] private GameObject rowPrefab;
     [SerializeField] private Button backButton;
-
     private GameProgress gameProgress;
 
-    // Convert speed level to English text
+    // Convert speed level to Hebrew text
     private string GetDifficultyText(float level)
     {
         return level switch
         {
-            0.2f => "Easy",
-            0.3f => "Medium",
-            0.4f => "Hard",
-            _ => "Unknown"
+            0.2f => "קל",
+            0.3f => "בינוני",
+            0.4f => "קשה",
+            _ => "לא ידוע"
         };
     }
 
-    // Convert obstacle level to English text
+    // Convert obstacle level to Hebrew text
     private string GetObstacleText(float level)
     {
         return level switch
         {
-            0 => "No Obstacles",
-            1 => "With Obstacles",
-            _ => "Unknown"
+            0 => "בלי מכשולים",
+            1 => "עם מכשולים",
+            _ => "לא ידוע"
         };
     }
 
@@ -50,33 +50,37 @@ public class ResultsDisplay : MonoBehaviour
     {
         var results = gameProgress.GetHistory();
         Debug.Log($"Found {results.Count} results to display");
-
+        int gameNumber = 1;
         foreach (var result in results)
         {
-        
-
             GameObject rowObj = Instantiate(rowPrefab, contentParent);
-            Text[] texts = rowObj.GetComponentsInChildren<Text>();
-
+            TextMeshProUGUI[] texts = rowObj.GetComponentsInChildren<TextMeshProUGUI>();
             if (texts.Length < 5)
             {
                 Debug.LogError($"Row prefab doesn't have enough Text components. Found: {texts.Length}, Need: 5");
                 continue;
             }
 
-            Debug.Log("textttt00" + texts[0].text);
-            Debug.Log("textttt11" + texts[1].text);
-            Debug.Log("textttt22" + texts[2].text);
-            Debug.Log("textttt33" + texts[3].text);
-            Debug.Log("textttt44" + texts[4].text);
+            texts[0].text = result.missProduct.ToString();
+            string formattedTime = $"{result.averageResponseTime:0.00}";
+            Debug.Log(formattedTime+ "  formattedTime");
+            Debug.Log($"{result.averageResponseTime:0.00}");
+            texts[1].text = "\u200E" + ReverseNumber(result.averageResponseTime) + " שניות";
 
-            texts[0].text = result.date.ToString();
-            texts[1].text = result.missProduct.ToString();
-            texts[2].text = GetObstacleText(result.obstacleLevel); 
-            texts[3].text = GetDifficultyText(result.spSpeedLevel); 
-            texts[4].text = $"{result.averageResponseTime:F2}s";
+            texts[2].text = GetObstacleText(result.obstacleLevel);
+            texts[3].text = GetDifficultyText(result.spSpeedLevel);
+            texts[4].text = gameNumber.ToString();
+
+            gameNumber++;
         }
     }
+    private string ReverseNumber(float number)
+    {
+        char[] charArray = number.ToString("F2").ToCharArray();
+        System.Array.Reverse(charArray);
+        return new string(charArray);
+    }
+
 
     void SetupButton()
     {
