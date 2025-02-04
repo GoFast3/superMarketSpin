@@ -11,9 +11,9 @@ public class AutoMove : MonoBehaviour
     [Header("Movement Settings")]
     public float forwardSpeed = 5f;
     public float laneDistance = 2f;
-    public float jumpForce = 4f;    
-    public float gravity = -20f;    
-   
+    public float jumpForce = 4f;
+    public float gravity = -20f;
+
     [Header("Lane Settings")]
 
     [SerializeField] private float[] lanePositions = new float[] { 0f, 2f, 4f };
@@ -23,10 +23,10 @@ public class AutoMove : MonoBehaviour
     private float targetX = 0f;
     private int LandCunt;
 
-    public float minSpawnDistance ;
+    public float minSpawnDistance;
     private int gameMode;
     private int currentLane;
-    bool hasObstacles ;
+    bool hasObstacles;
 
 
 
@@ -37,8 +37,8 @@ public class AutoMove : MonoBehaviour
         transform.position = new Vector3(2f, transform.position.y, transform.position.z);
 
         forwardSpeed = PlayerPrefs.GetFloat("forwardSpeed");
-        gameMode = PlayerPrefs.GetInt("GameMode", 1); 
-        
+        gameMode = PlayerPrefs.GetInt("GameMode", 1);
+
 
         if (gameMode == 0)
         {
@@ -54,7 +54,7 @@ public class AutoMove : MonoBehaviour
             lanePositions = new float[] { 0f, 2f, 4f };
             hasObstacles = false;
             LandCunt = 3;
-            currentLane=1;
+            currentLane = 1;
 
         }
         else
@@ -74,7 +74,7 @@ public class AutoMove : MonoBehaviour
         Debug.Log("gamemode " + gameMode);
 
     }
-    
+
 
     void Update()
     {
@@ -86,7 +86,7 @@ public class AutoMove : MonoBehaviour
         {
             if (!isJumping)
             {
-                velocity.y = -0.9f; 
+                velocity.y = -0.9f;
             }
 
             transform.position = new Vector3(transform.position.x, hit.point.y, transform.position.z);
@@ -110,7 +110,7 @@ public class AutoMove : MonoBehaviour
 
         transform.forward = Vector3.forward;
 
-      
+
         CheckJumpAnimationEnd();
     }
 
@@ -127,7 +127,7 @@ public class AutoMove : MonoBehaviour
             currentLane--;
             targetX = lanePositions[currentLane];
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow) && currentLane < (LandCunt-1))
+        else if (Input.GetKeyDown(KeyCode.RightArrow) && currentLane < (LandCunt - 1))
         {
             Debug.Log($"Moving right - Lane: {currentLane}");
             currentLane++;
@@ -140,10 +140,10 @@ public class AutoMove : MonoBehaviour
     private void HandleJumping()
     {
 
-       
-        if (Input.GetKeyDown(KeyCode.UpArrow) )
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            
+
             Debug.Log("Jumping");
             isJumping = true;
             velocity.y = Mathf.Sqrt(jumpForce * -1f * gravity);

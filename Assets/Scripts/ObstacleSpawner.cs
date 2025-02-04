@@ -9,7 +9,7 @@ public class ObstacleManager : MonoBehaviour
 {
     private float lastSpawnDistance;
     private float spawnDistanceThreshold = 30f;
-    private float spawnDistanceReductionRate = 0.1f; 
+    private float spawnDistanceReductionRate = 0.1f;
 
     [Header("Obstacle Settings")]
     [Tooltip("Obstacle prefab to spawn")]
@@ -44,7 +44,7 @@ public class ObstacleManager : MonoBehaviour
         {
             return;
         }
-       
+
 
         Debug.Log("ObstacleManager: Start called");
 
@@ -68,12 +68,12 @@ public class ObstacleManager : MonoBehaviour
         }
 
         lastSpawnDistance = playerTransform.position.z;
-        SpawnObstacle();  
+        SpawnObstacle();
     }
 
     private void Update()
     {
-        
+
 
         // check if the player has moved enough distance to spawn a new obstacle
         float playerDistanceTravelled = playerTransform.position.z;

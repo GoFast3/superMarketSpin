@@ -15,10 +15,10 @@ public class ResultsDisplay : MonoBehaviour
     {
         return level switch
         {
-            0.2f => "÷ì",
-            0.3f => "áéðåðé",
-            0.4f => "÷ùä",
-            _ => "ìà éãåò"
+            0.2f => "ï¿½ï¿½",
+            0.3f => "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
+            0.4f => "ï¿½ï¿½ï¿½",
+            _ => "ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½"
         };
     }
 
@@ -27,9 +27,9 @@ public class ResultsDisplay : MonoBehaviour
     {
         return level switch
         {
-            0 => "áìé îëùåìéí",
-            1 => "òí îëùåìéí",
-            _ => "ìà éãåò"
+            0 => "ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
+            1 => "ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
+            _ => "ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½"
         };
     }
 
@@ -63,9 +63,9 @@ public class ResultsDisplay : MonoBehaviour
 
             texts[0].text = result.missProduct.ToString();
             string formattedTime = $"{result.averageResponseTime:0.00}";
-            Debug.Log(formattedTime+ "  formattedTime");
+            Debug.Log(formattedTime + "  formattedTime");
             Debug.Log($"{result.averageResponseTime:0.00}");
-            texts[1].text = "\u200E" + ReverseNumber(result.averageResponseTime) + " ùðéåú";
+            texts[1].text = "\u200E" + ReverseNumber(result.averageResponseTime) + " ï¿½ï¿½ï¿½ï¿½ï¿½";
 
             texts[2].text = GetObstacleText(result.obstacleLevel);
             texts[3].text = GetDifficultyText(result.spSpeedLevel);

@@ -12,7 +12,7 @@ public class PlayerStats : MonoBehaviour
 
     void Start()
     {
-        
+
         SpeedLevel = PlayerPrefs.GetFloat("forwardSpeed", 1);
         obstacleLevel = PlayerPrefs.GetFloat("hasObstacles", 1);
     }

@@ -46,7 +46,8 @@ public class MenuManager : MonoBehaviour
         SetupSpeedButtons();
         SetupGameModeButtons();
 
-        startButton.onClick.AddListener(() => {
+        startButton.onClick.AddListener(() =>
+        {
             Debug.Log("Starting game");
             StartGame();
         });
@@ -54,17 +55,20 @@ public class MenuManager : MonoBehaviour
 
     private void SetupSpeedButtons()
     {
-        easyButton.onClick.AddListener(() => {
+        easyButton.onClick.AddListener(() =>
+        {
             SetDifficulty(EasySpeed);
             UpdateSpeedButtonVisuals(easyButton);
         });
 
-        mediumButton.onClick.AddListener(() => {
+        mediumButton.onClick.AddListener(() =>
+        {
             SetDifficulty(MediumSpeed);
             UpdateSpeedButtonVisuals(mediumButton);
         });
 
-        hardButton.onClick.AddListener(() => {
+        hardButton.onClick.AddListener(() =>
+        {
             SetDifficulty(HardSpeed);
             UpdateSpeedButtonVisuals(hardButton);
         });
@@ -72,17 +76,20 @@ public class MenuManager : MonoBehaviour
 
     private void SetupGameModeButtons()
     {
-        oneLAandWhithOutObs.onClick.AddListener(() => {
+        oneLAandWhithOutObs.onClick.AddListener(() =>
+        {
             PlayerPrefs.SetInt("GameMode", 0);
             UpdateGameModeButtonVisuals(oneLAandWhithOutObs);
         });
 
-        twoLAandWhithOutObs.onClick.AddListener(() => {
+        twoLAandWhithOutObs.onClick.AddListener(() =>
+        {
             PlayerPrefs.SetInt("GameMode", 1);
             UpdateGameModeButtonVisuals(twoLAandWhithOutObs);
         });
 
-        threeLanesWithObstaclesButton.onClick.AddListener(() => {
+        threeLanesWithObstaclesButton.onClick.AddListener(() =>
+        {
             PlayerPrefs.SetInt("GameMode", 2);
             UpdateGameModeButtonVisuals(threeLanesWithObstaclesButton);
         });

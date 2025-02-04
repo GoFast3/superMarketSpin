@@ -11,7 +11,7 @@ public class GameResult
     public float spSpeedLevel;
     public float obstacleLevel;
 }
-public class GameProgress : MonoBehaviour  
+public class GameProgress : MonoBehaviour
 {
     void Awake()
     {

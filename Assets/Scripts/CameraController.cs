@@ -17,16 +17,17 @@ public class CameraController : MonoBehaviour
         {
             offset.x = 0.77f;
         }
-        else {
+        else
+        {
             offset.x = 2.03f;
         }
 
-        }
+    }
     private void LateUpdate()
     {
         Vector3 followPos = target.position + offset;
-        followPos.y =offset.y;
-        followPos.x =offset.x; 
+        followPos.y = offset.y;
+        followPos.x = offset.x;
         transform.position = followPos;
     }
 

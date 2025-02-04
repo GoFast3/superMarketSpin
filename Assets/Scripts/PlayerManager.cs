@@ -12,7 +12,7 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
-        gameOver=false;
+        gameOver = false;
         Time.timeScale = 1;
 
     }
@@ -23,10 +23,10 @@ public class PlayerManager : MonoBehaviour
         if (gameOver)
         {
             Time.timeScale = 0;
-            GameOverPanel.SetActive(true);     
+            GameOverPanel.SetActive(true);
         }
 
     }
- 
-   
+
+
 }
