@@ -7,8 +7,7 @@ A Unity-based rehabilitation game designed to help adults improve reaction time 
 
 ## **Project Supervision**
 - **Computer Science Department**: Professor David Erel Segal Halevi, TA Viktor Kushnirov
-- **Occupational Therapy Department**: Yfat Ben Refeak, Yael Sarusi, Shiraz Unter
-
+  
 ## **Overview**
 A therapeutic game for adults focusing on improving reaction time and cognitive function through supermarket navigation and product collection.
 
@@ -34,7 +33,7 @@ A therapeutic game for adults focusing on improving reaction time and cognitive 
 3. Build and run
 
 ## **Resources**
-- **AI Integration**: Powered by Claude
+- **AI Integration**:gpt, Claude
 - **Tutorials**: [Unity Game Development Tutorial](https://www.youtube.com/watch?v=XtQMytORBmM&t=1750s)
 - **Course Website**: Utilized to download the rehabilitation therapy materials initially
 
