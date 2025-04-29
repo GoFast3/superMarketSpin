@@ -3,7 +3,7 @@
 A Unity-based rehabilitation game designed to help adults improve reaction time through a supermarket shopping experience. Developed in collaboration with the Occupational Therapy Department.
 
 ## **Play the Game**
-🎮 [Play on Itch.io]([your-itch-link-here](https://talya-amd-roei.itch.io/superplay))
+🎮 [Play on Itch.io](https://talya-amd-roei.itch.io/superplay)
 
 ## **Project Supervision**
 - **Computer Science Department**: Professor David Erel Segal Halevi, TA Viktor Kushnirov
