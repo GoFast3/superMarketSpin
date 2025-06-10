@@ -1315,7 +1315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 741961807}
-  offset: {x: 0, y: 2.6, z: -3.7}
+  offset: {x: 3.27, y: 2.76, z: -3.81}
   speedFollow: 5
 --- !u!1 &1163273091
 GameObject:
@@ -1399,7 +1399,7 @@ MonoBehaviour:
   obstaclePrefab: {fileID: 5243540695542748484, guid: cf11591b126f82a44915f299bca50dbc, type: 3}
   obstacleHeight: -0.5
   laneCount: 3
-  laneDistance: 2
+  laneDistance: 3
   playerTransform: {fileID: 741961807}
 --- !u!114 &1535589475
 MonoBehaviour:
@@ -1418,7 +1418,6 @@ MonoBehaviour:
   - {fileID: 404106111699362895, guid: 853de5ddeeb467c4b9db1af83ff9d2a8, type: 3}
   - {fileID: 931671872441545693, guid: 7ea2ecf0dcf75ff46a5939424cfd15be, type: 3}
   - {fileID: 3438950042403290160, guid: 5bb1ad18ae9690142af049ddbccb99ad, type: 3}
-  - {fileID: 1367023759566188099, guid: 9dee2b7483226b045afdea6dc727d450, type: 3}
   player: {fileID: 741961807}
   scoreText: {fileID: 1575420149}
   spawnYPosition: -0.3
@@ -2058,7 +2057,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3520665378152893220, guid: 30eda7e6142a3c64282a24f2e676acc6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3520665378152893220, guid: 30eda7e6142a3c64282a24f2e676acc6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2110,7 +2109,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7847879496089989982, guid: 30eda7e6142a3c64282a24f2e676acc6, type: 3}
       propertyPath: laneDistance
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

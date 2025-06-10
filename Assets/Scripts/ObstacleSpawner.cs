@@ -21,7 +21,7 @@ public class ObstacleManager : MonoBehaviour
     [Tooltip("Number of available lanes")]
     [SerializeField] private int laneCount = 3;
     [Tooltip("Distance between lanes")]
-    [SerializeField] private float laneDistance = 2f;
+    [SerializeField] private float laneDistance = 3f;
     [SerializeField] private Transform playerTransform;
 
     private TutorialManager tutorialManager;

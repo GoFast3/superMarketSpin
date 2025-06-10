@@ -15,21 +15,22 @@ public class ResultsDisplay : MonoBehaviour
     {
         return level switch
         {
-            0.2f => "��",
-            0.3f => "������",
-            0.4f => "���",
-            _ => "�� ����"
+            0.2f => "קל",
+            0.3f => "בינוני",
+            0.4f => "קשה",
+            _ => "לא ידוע"
         };
     }
 
     // Convert obstacle level to Hebrew text
     private string GetObstacleText(float level)
     {
+        Debug.Log(level + "  levellll  !!");
         return level switch
         {
-            0 => "��� �������",
-            1 => "�� �������",
-            _ => "�� ����"
+            0 => "בלי מכשולים",
+            1 => "עם מכשולים ",
+            2=> "לא ידוע"
         };
     }
 
@@ -65,7 +66,7 @@ public class ResultsDisplay : MonoBehaviour
             string formattedTime = $"{result.averageResponseTime:0.00}";
             Debug.Log(formattedTime + "  formattedTime");
             Debug.Log($"{result.averageResponseTime:0.00}");
-            texts[1].text = "\u200E" + ReverseNumber(result.averageResponseTime) + " �����";
+            texts[1].text =  ReverseNumber(result.averageResponseTime) + " שניות";
 
             texts[2].text = GetObstacleText(result.obstacleLevel);
             texts[3].text = GetDifficultyText(result.spSpeedLevel);

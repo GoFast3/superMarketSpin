@@ -25,7 +25,8 @@ public class GameProgress : MonoBehaviour
     }
     public void SaveGameResult(float responseTime, float missed, float speedLevel, float obstacles)
     {
-        obstacles = PlayerPrefs.GetInt("hasObstacles", 1) == 1 ? obstacles : 0;
+        obstacles = PlayerPrefs.GetInt("GameMode", 1) == 2 ? 1 : 0;
+
         GameResult result = new GameResult
         {
             date = DateTime.Now,

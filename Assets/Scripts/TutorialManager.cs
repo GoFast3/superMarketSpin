@@ -29,8 +29,8 @@ public class TutorialManager : MonoBehaviour
             return;
         }
 
-
         InitializeTutorialSteps();
+
         if (skipButton != null)
         {
             skipButton.onClick.RemoveAllListeners();
@@ -41,6 +41,7 @@ public class TutorialManager : MonoBehaviour
             Debug.LogError("Skip button is null!");
             return;
         }
+
         ShowCurrentStep();
     }
 
@@ -50,7 +51,7 @@ public class TutorialManager : MonoBehaviour
         {
             new TutorialStep { message = "ברוכים הבאים למשחק!\nהדרכה קצרה תעזור לך ללמוד איך לשחק.\n\nלחץ 'דלג' כדי להתחיל!" },
             new TutorialStep { message = "תנועה במשחק:\nחץ שמאלה - לזוז שמאלה\nחץ ימינה - לזוז ימינה\nחץ למעלה - לקפוץ\n\nלחץ 'דלג' להמשך" },
-            new TutorialStep { message = "המטרה שלך:\nעליך לאסוף כמה שיותר מוצרים בזמן הקצר ביותר.\n\nלחץ 'דלג' להמשך" },
+            new TutorialStep { message = "המטרה :\nעליך לאסוף 03 מוצרים בזמן המהיר ביותר.\n\nלחץ 'דלג' להמשך" },
             new TutorialStep { message = "איך לאסוף מוצרים?\n1. הזז את השחקן לנתיב שבו נמצא המוצר.\n2. לחץ על מקש הרווח כדי לאסוף.\n\nלחץ 'דלג' להמשך" },
             new TutorialStep { message = "שים לב!\nניתן לאסוף מוצרים גם לפני שהגעת אליהם!\n\nלחץ 'דלג' להמשך" },
             new TutorialStep { message = "מוכנים לשחק!\n\nהשתמשו בחצים לתנועה\nלחצו רווח כדי לאסוף מוצרים\n\nלחצו 'דלג' כדי להתחיל!" }
@@ -64,6 +65,7 @@ public class TutorialManager : MonoBehaviour
             EndTutorial();
             return;
         }
+
         if (tutorialPanel != null && tutorialText != null)
         {
             tutorialPanel.SetActive(true);
@@ -92,6 +94,9 @@ public class TutorialManager : MonoBehaviour
         {
             tutorialText.text = "";
         }
+        // Update PlayerPrefs so tutorial won't show automatically next time
+        PlayerPrefs.SetInt("ShowTutorial", 0);
+
         if (skipButton != null)
         {
             skipButton.gameObject.SetActive(false);

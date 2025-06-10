@@ -13,6 +13,7 @@ public class MenuManager : MonoBehaviour
     public Button twoLAandWhithOutObs;
     public Button threeLanesWithObstaclesButton;
     public Button startButton;
+    public Button tutorialButton; // Added tutorial button
 
     [Header("Speed Settings")]
     [SerializeField] float EasySpeed;
@@ -51,6 +52,15 @@ public class MenuManager : MonoBehaviour
             Debug.Log("Starting game");
             StartGame();
         });
+
+        // Add functionality to tutorial button
+        if (tutorialButton != null)
+        {
+            tutorialButton.onClick.AddListener(() =>
+            {
+                ShowTutorial();
+            });
+        }
     }
 
     private void SetupSpeedButtons()
@@ -142,6 +152,17 @@ public class MenuManager : MonoBehaviour
     public void StartGame()
     {
         PlayerPrefs.SetInt("isRestarted", 1);
+        SceneManager.LoadScene("player");
+    }
+
+    // New function to show tutorial
+    public void ShowTutorial()
+    {
+        // Enable tutorial
+        PlayerPrefs.SetInt("ShowTutorial", 1);
+        PlayerPrefs.SetInt("isRestarted", 1);
+
+        // Load game scene to show tutorial
         SceneManager.LoadScene("player");
     }
 }

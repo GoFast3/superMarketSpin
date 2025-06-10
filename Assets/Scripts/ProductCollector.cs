@@ -25,7 +25,7 @@ namespace SubwaySurfer
         [Tooltip("Margin of error for lane position checking")]
         [SerializeField] private float laneErrorMargin = 0.1f;
         [Tooltip("Available lane positions on X axis")]
-        [SerializeField] private float[] lanePositions = { 0f, 2f, 4f };
+        [SerializeField] private float[] lanePositions = { 0f, 3f, 6f };
 
         [Header("Game End Conditions")]
         [Tooltip("Score required to win the game")]
@@ -86,20 +86,20 @@ namespace SubwaySurfer
             int gameMode = PlayerPrefs.GetInt("GameMode", 1);
             if (gameMode == 0)
             {
-                lanePositions = new float[] { 0f, 2f };
+                lanePositions = new float[] { 0f, 3f };
 
 
 
             }
             else if (gameMode == 1)
             {
-                lanePositions = new float[] { 0f, 2f, 4f };
+                lanePositions = new float[] { 0f, 3f, 6f };
 
 
             }
             else
             {
-                lanePositions = new float[] { 0f, 2f, 4f };
+                lanePositions = new float[] { 0f, 3f, 6f };
             }
 
             gameStartTime = Time.time;

@@ -10,13 +10,13 @@ public class AutoMove : MonoBehaviour
     public CharacterController controller;
     [Header("Movement Settings")]
     public float forwardSpeed = 5f;
-    public float laneDistance = 2f;
+    public float laneDistance = 3f;
     public float jumpForce = 4f;
     public float gravity = -20f;
 
     [Header("Lane Settings")]
 
-    [SerializeField] private float[] lanePositions = new float[] { 0f, 2f, 4f };
+    [SerializeField] private float[] lanePositions = new float[] { 0f, 3f, 6f };
     private Vector3 velocity;
     private bool isGrounded;
     private bool isJumping = false;
@@ -34,7 +34,7 @@ public class AutoMove : MonoBehaviour
     public void Start()
     {
 
-        transform.position = new Vector3(2f, transform.position.y, transform.position.z);
+        transform.position = new Vector3(3f, transform.position.y, transform.position.z);
 
         forwardSpeed = PlayerPrefs.GetFloat("forwardSpeed");
         gameMode = PlayerPrefs.GetInt("GameMode", 1);
@@ -42,7 +42,7 @@ public class AutoMove : MonoBehaviour
 
         if (gameMode == 0)
         {
-            lanePositions = new float[] { 0f, 2f };
+            lanePositions = new float[] { 0f, 3f };
             hasObstacles = false;
             LandCunt = 2;
             currentLane = 0;
@@ -51,7 +51,7 @@ public class AutoMove : MonoBehaviour
         }
         else if (gameMode == 1)
         {
-            lanePositions = new float[] { 0f, 2f, 4f };
+            lanePositions = new float[] { 0f, 3f, 6f };
             hasObstacles = false;
             LandCunt = 3;
             currentLane = 1;
@@ -59,7 +59,7 @@ public class AutoMove : MonoBehaviour
         }
         else
         {
-            lanePositions = new float[] { 0f, 2f, 4f };
+            lanePositions = new float[] { 0f, 3f, 6f };
             hasObstacles = true;
             LandCunt = 3;
             currentLane = 1;

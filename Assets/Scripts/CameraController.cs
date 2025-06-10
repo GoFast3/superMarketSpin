@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            offset.x = 2.03f;
+            offset.x = 3.27f;
         }
 
     }
