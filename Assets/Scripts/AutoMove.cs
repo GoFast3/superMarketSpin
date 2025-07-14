@@ -79,6 +79,7 @@ public class AutoMove : MonoBehaviour
     void Update()
     {
         if (TutorialManager.IsTutorialActive) return;
+        if (Time.timeScale == 0) return;
 
         isGrounded = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1.1f) && velocity.y <= 0;
 

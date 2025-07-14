@@ -14,7 +14,6 @@ namespace SubwaySurfer
         [SerializeField] private Transform player;
         [SerializeField] private Text scoreText;
 
-
         [Header("Spawn Settings")]
         [Tooltip("Y position where products will spawn")]
         [SerializeField] private float spawnYPosition = -0.3f;
@@ -29,9 +28,13 @@ namespace SubwaySurfer
 
         [Header("Game End Conditions")]
         [Tooltip("Score required to win the game")]
-        [SerializeField] private int scoreToWin = 30;
+        [SerializeField] private int scoreToWin = 3;
         [Tooltip("Time limit in seconds (120 = 2 minutes)")]
         [SerializeField] private float gameTimeLimit = 120f;
+
+        [Header("Win Message")]
+        [SerializeField] private GameObject winMessagePanel;
+        [SerializeField] private Button winMessageCloseButton;
 
         // Private variables for game management
         private GameProgress gameProgress;
@@ -42,6 +45,7 @@ namespace SubwaySurfer
         private List<float> reactionTimes = new List<float>();
         private PlayerStats playerStats;
         private AudioManager audioManager;
+        private bool gameWon = false;
 
         void Start()
         {
@@ -58,6 +62,11 @@ namespace SubwaySurfer
                 Debug.LogWarning("AudioManager not found in scene!");
             }
 
+            // Hide win message panel at start
+            if (winMessagePanel != null)
+            {
+                winMessagePanel.SetActive(false);
+            }
 
             InitializeGame();
         }
@@ -66,19 +75,16 @@ namespace SubwaySurfer
         {
             UpdateScoreUI();
 
-
             playerStats = Object.FindFirstObjectByType<PlayerStats>();
             gameProgress = Object.FindFirstObjectByType<GameProgress>();
 
             // Find and validate PlayerStats
-            //  playerStats = Object.FindFirstObjectByType<PlayerStats>();
             if (playerStats == null)
             {
                 Debug.LogError("PlayerStats not found in scene!");
             }
 
             // Find and validate GameProgress
-            //  gameProgress = Object.FindFirstObjectByType<GameProgress>();
             if (gameProgress == null)
             {
                 Debug.LogError("GameProgress not found in scene!");
@@ -87,15 +93,10 @@ namespace SubwaySurfer
             if (gameMode == 0)
             {
                 lanePositions = new float[] { 0f, 3f };
-
-
-
             }
             else if (gameMode == 1)
             {
                 lanePositions = new float[] { 0f, 3f, 6f };
-
-
             }
             else
             {
@@ -143,7 +144,6 @@ namespace SubwaySurfer
             }
 
             CheckGameEndConditions();
-
         }
 
         private void SpawnRandomProduct()
@@ -152,26 +152,21 @@ namespace SubwaySurfer
             Vector3 spawnPosition = Vector3.zero;
             int randomProductIndex = Random.Range(0, productPrefabs.Length);
 
-
-            // בחירת מסלול רנדומלי
+            // Random lane selection
             int randomLaneIndex = Random.Range(0, lanePositions.Length);
             float spawnZ = player.position.z + Random.Range(minSpawnDistance, maxSpawnDistance);
             spawnPosition = new Vector3(lanePositions[randomLaneIndex], spawnYPosition, spawnZ);
-
 
             RaycastHit hit;
             while (Physics.Raycast(spawnPosition, Vector3.back, out hit, 12f) && hit.collider.CompareTag("obstacle"))
             {
                 spawnZ += 12f;
                 spawnPosition.z = spawnZ;
-
             }
 
             currentProduct = Instantiate(productPrefabs[randomProductIndex], spawnPosition, Quaternion.identity);
             productSpawnTime = Time.time;
-
         }
-
 
         private void CollectProduct()
         {
@@ -192,6 +187,13 @@ namespace SubwaySurfer
             currentProduct = null;
             score++;
             UpdateScoreUI();
+
+            // Check if player won
+            if (score >= scoreToWin && !gameWon)
+            {
+                gameWon = true;
+                ShowWinMessage();
+            }
         }
 
         private bool IsPlayerOnProductLane()
@@ -202,12 +204,34 @@ namespace SubwaySurfer
 
         private void UpdateScoreUI()
         {
-            scoreText.text = $"Score: {score}";
+            scoreText.text = $"{score}/{scoreToWin}";
         }
 
         public float GetAverageReactionTime()
         {
             return reactionTimes.Count > 0 ? reactionTimes.Average() : 0f;
+        }
+
+        private void ShowWinMessage()
+        {
+            if (winMessagePanel != null)
+            {
+                winMessagePanel.SetActive(true);
+                Time.timeScale = 0; // Pause the game
+
+                // Add listener to close button
+                if (winMessageCloseButton != null)
+                {
+                    winMessageCloseButton.onClick.RemoveAllListeners();
+                    winMessageCloseButton.onClick.AddListener(CloseWinMessage);
+                }
+            }
+        }
+
+        private void CloseWinMessage()
+        {
+            Time.timeScale = 1; // Resume normal time
+            EndGame("You Won!");
         }
 
         private void CheckGameEndConditions()
@@ -219,12 +243,7 @@ namespace SubwaySurfer
                 return;
             }
 
-            // Check score goal
-            if (score >= scoreToWin)
-            {
-                EndGame("You Won!");
-                return;
-            }
+            // Score goal check is now handled in CollectProduct() - removed from here
         }
 
         private void EndGame(string reason)
@@ -243,13 +262,11 @@ namespace SubwaySurfer
 
             UnityEngine.SceneManagement.SceneManager.LoadScene("ResultsScene");
         }
+
         public void ExitToMenu()
         {
-
             PlayerPrefs.SetInt("ShowTutorial", 0);
-
             SceneManager.LoadScene("MenuScene"); // Loads the main menu scene
         }
     }
-
 }

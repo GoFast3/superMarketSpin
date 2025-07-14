@@ -1,0 +1,11 @@
+Model Information:
+* title:	Groceries Pack! Low poly assets for your games!
+* source:	https://sketchfab.com/3d-models/groceries-pack-low-poly-assets-for-your-games-46d7eb7049ac4becae4258518f86818d
+* author:	tulex_art (https://sketchfab.com/CassioFernandes)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Groceries Pack! Low poly assets for your games!" (https://sketchfab.com/3d-models/groceries-pack-low-poly-assets-for-your-games-46d7eb7049ac4becae4258518f86818d) by tulex_art (https://sketchfab.com/CassioFernandes) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
