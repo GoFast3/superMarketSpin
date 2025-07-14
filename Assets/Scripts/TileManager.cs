@@ -6,6 +6,7 @@ public class TileManager : MonoBehaviour
     [Header("Tile Settings")]
     [SerializeField] private GameObject twoLaneTilePrefab; // Prefab for the two-lane road
     [SerializeField] private GameObject threeLaneTilePrefab; // Prefab for the three-lane road
+    [SerializeField] private GameObject oneLaneTilePrefab;
     [SerializeField] private float tileLength = 97f; // Length of each tile
     [SerializeField] private int numberOfTiles = 3; // Number of tiles to be spawned at the start
     [SerializeField] private Transform playerTransform; // Reference to the player to track movement
@@ -52,6 +53,10 @@ public class TileManager : MonoBehaviour
         else if (gameMode == 1 || gameMode == 2)
         {
             tilePrefab = threeLaneTilePrefab; // Use three-lane road
+        }
+        else if (gameMode == 3)
+        {
+            tilePrefab = oneLaneTilePrefab; // Use one-lane road
         }
         else
         {

@@ -17,11 +17,15 @@ public class CameraController : MonoBehaviour
         {
             offset.x = 0.77f;
         }
+        if (gameMode ==3)
+        {
+            offset.x = 0.67f;
+        }
         else
         {
             offset.x = 3.27f;
         }
-
+        
     }
     private void LateUpdate()
     {

@@ -12,6 +12,7 @@ public class MenuManager : MonoBehaviour
     public Button oneLAandWhithOutObs;
     public Button twoLAandWhithOutObs;
     public Button threeLanesWithObstaclesButton;
+    public Button threeLanesWithoutObstaclesButton;
     public Button startButton;
     public Button tutorialButton; // Added tutorial button
 
@@ -88,14 +89,20 @@ public class MenuManager : MonoBehaviour
     {
         oneLAandWhithOutObs.onClick.AddListener(() =>
         {
-            PlayerPrefs.SetInt("GameMode", 0);
+            PlayerPrefs.SetInt("GameMode", 3);
             UpdateGameModeButtonVisuals(oneLAandWhithOutObs);
         });
 
         twoLAandWhithOutObs.onClick.AddListener(() =>
         {
-            PlayerPrefs.SetInt("GameMode", 1);
+            PlayerPrefs.SetInt("GameMode", 0);
             UpdateGameModeButtonVisuals(twoLAandWhithOutObs);
+        });
+
+        threeLanesWithoutObstaclesButton.onClick.AddListener(() =>
+        {
+            PlayerPrefs.SetInt("GameMode", 1);
+            UpdateGameModeButtonVisuals(threeLanesWithObstaclesButton);
         });
 
         threeLanesWithObstaclesButton.onClick.AddListener(() =>

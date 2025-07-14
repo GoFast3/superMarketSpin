@@ -35,7 +35,7 @@ public class ObstacleManager : MonoBehaviour
     private void Start()
     {
         int gameMode = PlayerPrefs.GetInt("GameMode", 1);
-        if (gameMode == 0 || gameMode == 1)
+        if (gameMode == 0 || gameMode == 1|| gameMode == 3)
         {
             enabled = false;
             return;

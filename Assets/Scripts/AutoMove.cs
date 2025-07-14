@@ -49,6 +49,14 @@ public class AutoMove : MonoBehaviour
 
 
         }
+        else if (gameMode == 3)
+        {
+            lanePositions = new float[] {0.5f };
+            hasObstacles = false;
+            LandCunt = 1;
+            currentLane = 0;
+
+        }
         else if (gameMode == 1)
         {
             lanePositions = new float[] { 0f, 3f, 6f };
@@ -79,7 +87,7 @@ public class AutoMove : MonoBehaviour
     void Update()
     {
         if (TutorialManager.IsTutorialActive) return;
-        if (Time.timeScale == 0) return;
+
 
         isGrounded = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1.1f) && velocity.y <= 0;
 

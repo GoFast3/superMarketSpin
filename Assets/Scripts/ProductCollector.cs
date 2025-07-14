@@ -94,6 +94,10 @@ namespace SubwaySurfer
             {
                 lanePositions = new float[] { 0f, 3f };
             }
+            else if (gameMode == 3)
+            {
+                lanePositions = new float[] { 0.5f };
+            }
             else if (gameMode == 1)
             {
                 lanePositions = new float[] { 0f, 3f, 6f };

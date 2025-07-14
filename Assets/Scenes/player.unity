@@ -1915,8 +1915,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe35ad9b29199da4ea70706be91fc85f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  twoLaneTilePrefab: {fileID: 6816110086279923787, guid: 796b77b39e94d9846acdd947204de610, type: 3}
+  twoLaneTilePrefab: {fileID: 6816110086279923787, guid: 9518a6aa2c804d74d8c834292c8b8eb9, type: 3}
   threeLaneTilePrefab: {fileID: 6816110086279923787, guid: 071830a3292e9a64a8977a1d65ff8c2a, type: 3}
+  oneLaneTilePrefab: {fileID: 6816110086279923787, guid: 796b77b39e94d9846acdd947204de610, type: 3}
   tileLength: 97
   numberOfTiles: 3
   playerTransform: {fileID: 741961807}
