@@ -167,8 +167,7 @@ namespace SubwaySurfer
                 spawnZ += 12f;
                 spawnPosition.z = spawnZ;
             }
-
-            currentProduct = Instantiate(productPrefabs[randomProductIndex], spawnPosition, Quaternion.identity);
+            currentProduct = Instantiate(productPrefabs[randomProductIndex], spawnPosition, productPrefabs[randomProductIndex].transform.rotation);
             productSpawnTime = Time.time;
         }
 

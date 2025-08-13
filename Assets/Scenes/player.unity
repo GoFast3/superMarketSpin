@@ -1889,6 +1889,12 @@ MonoBehaviour:
   - {fileID: 404106111699362895, guid: 853de5ddeeb467c4b9db1af83ff9d2a8, type: 3}
   - {fileID: 931671872441545693, guid: 7ea2ecf0dcf75ff46a5939424cfd15be, type: 3}
   - {fileID: 3438950042403290160, guid: 5bb1ad18ae9690142af049ddbccb99ad, type: 3}
+  - {fileID: 2870826038127278315, guid: 4f4ba20701be16047bfd06bb8ff80d37, type: 3}
+  - {fileID: 2047162706622557044, guid: 6ba4440cb3fc70a47ba1be0b5bf5ba5c, type: 3}
+  - {fileID: 1471040611223401331, guid: f803f9583af82b14785ca10769513404, type: 3}
+  - {fileID: 8459235913930597412, guid: 01306b235f74e494d8148f195df9475f, type: 3}
+  - {fileID: 5714562911648140202, guid: 17b91f82188a88348b6fc46e5a0ffe30, type: 3}
+  - {fileID: 1367023759566188099, guid: 9dee2b7483226b045afdea6dc727d450, type: 3}
   player: {fileID: 741961807}
   scoreText: {fileID: 1575420149}
   spawnYPosition: -0.3
